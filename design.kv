@@ -3,20 +3,42 @@
         cols: 1
         GridLayout:
             cols: 1
+            padding: 15, 15
+            spacing: 20, 20
             Label:
                 text: "User Login"
+                font_size: '20sp'
             TextInput:
+                id: username
                 hint_text: "Username"
             TextInput:
+                id: password
                 hint_text: "Password"
-            Button:
-                text: "Login"
+                password: True #Encrypts password
+            RelativeLayout: #Allows for layout manipulation
+                Button:
+                    text: "Login"
+                    on_press: root.login(root.ids.username.text, root.ids.password.text)
+                    size_hint: 0.3, 0.5
+                    pos_hint: {'center_x' : 0.5, 'center_y' : 0.6}
+            Label:
+                id: login_wrong
+                text: ''
         GridLayout:
             cols: 2
+            size_hint: 0.2, 0.2
+            padding: 10, 10
+            spacing: 10, 0
             Button: 
                 text: "Forgot Password?"
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5 #Click reaction
+                color: 0.1, 0.7, 1, 1
             Button:
                 text: "Sign Up"
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5 #Click reaction
+                color: 0.1, 0.7, 1, 1
                 on_press: root.sign_up()
 
 <SignUpScreen>:
@@ -43,6 +65,24 @@
             text: "Login Page"
             on_press: root.switchToLogin()
 
+<LoginScreenSuccess>:
+    GridLayout:
+        cols: 1
+        Button:
+            text: "Logout"
+            on_press: root.logout()
+        Label:
+            text: "How do you feel?"
+        TextInput:
+            id: emotion
+            hint_text: "Things to try: happy, sad, unloved..."
+        Button:
+            text: "Let's go!"
+            on_press: root.showText(root.ids.emotion.text)
+        Label:
+            id: quote
+            text: ""
+
 <RootWidget>
     LoginScreen:
         name: "login_screen"
@@ -50,3 +90,5 @@
         name: "sign_up_screen"
     SignUpSuccess:
         name:"sign_up_success"
+    LoginScreenSuccess:
+        name:"login_screen_success"
